@@ -1,0 +1,21 @@
+使用方法
+赋予执行权限：
+bash
+chmod +x comprehensive_sensitive_search.sh
+
+基本使用（搜索所有类型）：
+bash
+./comprehensive_sensitive_search.sh /data/user/0/com.target.app
+
+
+仅搜索个人身份信息并显示详细过程：
+bash
+./comprehensive_sensitive_search.sh -p -v /data/user/0/com.target.app
+
+
+仅搜索账号凭证和配置文件：
+bash
+./comprehensive_sensitive_search.sh -c -f /data/user/0/com.target.app
+
+
+脚本会用不同颜色区分输出内容，使搜索结果更清晰易读。对于找到的敏感信息，会显示其所在文件和具体位置，方便进一步分析。
