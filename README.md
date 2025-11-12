@@ -1,5 +1,5 @@
 # TechApp-Tools
-金科认证app测试工具，不定期更新，感谢zjy/yb/lj等人的代码贡献
+金科认证app测试工具，不定期更新，感谢zjy/0xbinibini/lj等人的代码贡献
 
 BroadcastTest用于广播测试，使用方法：调起cmd, java -jar BroadcastTest.jar
 
