@@ -1,36 +1,26 @@
 import os
 from docx import Document
-from docx.shared import RGBColor, Pt
-from docx import Document
+from docx.shared import Pt
 from docx.oxml.ns import qn
-from docx.enum.style import WD_STYLE_TYPE
-import win32com.client as win32  
-import os
+
 # 获取当前目录
 current_dir = os.getcwd()
-
-
-# 定义默认值
+default_chayihua = "1"
 default_inspector = "蒋玉长"
 default_improvement_suggestions = "在客户端与服务端通信时实现双向认证"
 
-# 读取四次输入内容，带有默认值提示
+# 输入检测类型、人员、软件概述等
+print(f"全量检测选1（去除'差异化'），监督评审选2:", end="")
+chayihua = input() or default_chayihua
 print(f"检测人员（默认: {default_inspector}):", end="")
-inspector = input()
-if not inspector:
-    inspector = default_inspector
-
+inspector = input() or default_inspector
 print(f"被测客户端软件概述:", end="")
 software_summary = input()
-
 print(f"完善建议（默认: {default_improvement_suggestions}):", end="")
-improvement_suggestions = input()
-if not improvement_suggestions:
-    improvement_suggestions = default_improvement_suggestions
-
+improvement_suggestions = input() or default_improvement_suggestions
 print(f"请输入MD5值:", end="")
-MD5 = input()
-MD5 = MD5.upper()
+MD5 = input().upper()
+
 # 构建文件路径
 file_path = os.path.join(current_dir, '05客户端软件检测总体情况报告.docx')
 
@@ -48,6 +38,11 @@ else:
         # 遍历文档中的段落
         for paragraph in doc.paragraphs:
             # 替换段落中的文本
+            if chayihua == "1" and "差异化" in paragraph.text:
+                new_text = paragraph.text.replace("差异化", "") 
+                paragraph.text = ""  # 清空段落内容
+                run = paragraph.add_run(new_text)
+                run.font.size = Pt(12)  # 设置字体大小
             if '请人工填写' in paragraph.text:
                 if replace_count == 0:
                     original_text = paragraph.text
@@ -95,6 +90,11 @@ else:
                 for cell in row.cells:
                     for paragraph in cell.paragraphs:
                         # 替换表格单元格段落中的文本
+                        if chayihua == "1" and "差异化" in paragraph.text:
+                            new_text = paragraph.text.replace("差异化", "") # 仅删除字符，格式保留
+                            paragraph.text = ""  # 清空段落内容
+                            run = paragraph.add_run(new_text)
+                            run.font.size = Pt(10.5)  # 设置字体大小
                         if '请人工填写' in paragraph.text:
                             if replace_count == 1:
                                 original_text = paragraph.text
