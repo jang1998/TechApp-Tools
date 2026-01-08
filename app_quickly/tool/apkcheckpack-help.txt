@@ -1,0 +1,1 @@
+ApkCheckPack_windows_amd64.exe   -s=false -f test.apk
